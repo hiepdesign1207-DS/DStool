@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Tìm Tấm &amp; Theo Dõi Sản Xuất</title>
+<meta name="theme-color" content="#6250d6">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="wrap">
+  <div class="topbar">
+    <h1 id="pageTitle">Tìm Tấm &amp; Theo Dõi Sản Xuất</h1>
+  </div>
+  <div id="demoBanner" class="demo-banner" hidden></div>
+
+  <!-- MÀN HÌNH: danh sách công trình -->
+  <div id="screenHome">
+    <div class="panel">
+      <h2>Công trình</h2>
+      <div id="projectList"></div>
+      <div class="btnrow" style="margin-top:12px;">
+        <button class="btn btn-primary" id="newProjectBtn" type="button">+ Công trình mới</button>
+        <button class="btn" id="importNewBtn" type="button">Nhập model từ SketchUp (.json)</button>
+      </div>
+      <input type="file" id="importInput" accept="application/json,.json" style="display:none;">
+    </div>
+  </div>
+
+  <!-- MÀN HÌNH: dashboard một công trình -->
+  <div id="screenProject" hidden>
+    <button class="backlink" id="backHomeBtn" type="button">&larr; Tất cả công trình</button>
+    <div class="topbar" style="margin-top:8px;">
+      <h1 id="projectTitle"></h1>
+    </div>
+
+    <div class="panel">
+      <h2>Tiến độ tổng thể</h2>
+      <div class="progressrow">
+        <span class="label">Sản xuất (có trọng số)</span>
+        <div class="progressbar"><div id="progWeighted" style="width:0%"></div></div>
+        <span class="pct" id="progWeightedPct">0%</span>
+      </div>
+      <div class="progressrow">
+        <span class="label">Đã lắp đặt xong</span>
+        <div class="progressbar good"><div id="progInstalled" style="width:0%"></div></div>
+        <span class="pct" id="progInstalledPct">0%</span>
+      </div>
+      <div class="stagebars" id="stageBars"></div>
+      <div class="stagelegend" id="stageLegend"></div>
+      <div id="defectBanner"></div>
+    </div>
+
+    <div class="panel">
+      <button class="btn btn-primary btn-full btn-lg" id="openScannerBtn" type="button">📷 Quét mã tem</button>
+      <div class="btnrow" style="margin-top:10px;">
+        <button class="btn" id="importMoreBtn" type="button">Nhập thêm tấm (.json)</button>
+      </div>
+      <input type="file" id="importMoreInput" accept="application/json,.json" style="display:none;">
+    </div>
+
+    <div class="panel">
+      <h2>Danh sách tấm (<span id="panelCount">0</span>)</h2>
+      <div class="filterrow" id="stageFilterRow"></div>
+      <div class="panellist" id="panelList"></div>
+    </div>
+
+    <div class="panel">
+      <h2>Checklist lắp đặt (<span id="clPct">0</span>%)</h2>
+      <div id="checklistBox"></div>
+      <div class="addclirow">
+        <input type="text" id="newCliText" placeholder="Thêm bước mới…">
+        <button class="btn" id="addCliBtn" type="button">Thêm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- OVERLAY: quét camera -->
+<div class="overlay" id="scannerOverlay" hidden>
+  <div class="overlay-header">
+    <h2>Quét mã tem</h2>
+    <button class="closebtn" id="closeScannerBtn" type="button">&times;</button>
+  </div>
+  <div class="overlay-body">
+    <div class="camerawrap" id="cameraWrap">
+      <video id="scanVideo" playsinline muted></video>
+      <div class="scanreticle"></div>
+      <div class="camstatus" id="camStatus">Đang mở camera…</div>
+    </div>
+    <canvas id="scanCanvas" style="display:none;"></canvas>
+    <div id="scanResultBox"></div>
+    <div class="camfallback panel">
+      <label for="manualCodeInput">Hoặc gõ tay mã tem</label>
+      <div class="btnrow">
+        <input type="text" id="manualCodeInput" placeholder="vd: P003" autocomplete="off">
+        <button class="btn btn-primary" id="manualLookupBtn" type="button">Tìm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- OVERLAY: chi tiết một tấm -->
+<div class="overlay" id="panelDetailOverlay" hidden>
+  <div class="overlay-header">
+    <h2 id="detailTitle">Chi tiết tấm</h2>
+    <button class="closebtn" id="closeDetailBtn" type="button">&times;</button>
+  </div>
+  <div class="overlay-body" id="detailBody"></div>
+</div>
+
+<div class="toast" id="toast">Đã lưu</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsqr/1.4.0/jsQR.js"></script>
+<script type="module" src="app.js"></script>
+</body>
+</html>
