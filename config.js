@@ -1,6 +1,6 @@
 // config.js
 export const FIREBASE_CONFIG = {
-  apiKey: "AIzaSyDQ-kANczpQl24kh8PGd6t7WyBLLjaLChQ",
+  apiKey: "AIzaSyDQ-kANczpQl24kh8PGd6t7WyBlLjaLChQ",
   authDomain: "dstool-8df91.firebaseapp.com",
   projectId: "dstool-8df91",
   storageBucket: "dstool-8df91.firebasestorage.app",
